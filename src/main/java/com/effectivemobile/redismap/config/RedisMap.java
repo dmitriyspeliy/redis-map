@@ -1,30 +1,29 @@
 package com.effectivemobile.redismap.config;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.exceptions.JedisException;
 
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
 
 @Slf4j
+@RequiredArgsConstructor
+@Component
 public class RedisMap implements Map<String, String> {
-    private final JedisPool pool;
 
-    public RedisMap(String host, int port) {
-        String host1 = host == null ? "localhost" : host;
-        int port1 = port == 0 ? 6379 : port;
-        pool = new JedisPool(host, port);
-        log.info("Connect to redis server");
-    }
+    private final JedisPool pool;
 
     @Override
     public String get(Object key) {
         String res = null;
         try (Jedis jedis = pool.getResource()) {
             res = jedis.get((String) key);
-        } catch (Exception e) {
+        } catch (JedisException e) {
             log.error(e.getMessage());
         }
         return res;
@@ -35,7 +34,7 @@ public class RedisMap implements Map<String, String> {
         String res = null;
         try (Jedis jedis = pool.getResource()) {
             res = jedis.set(key, value);
-        } catch (Exception e) {
+        } catch (JedisException e) {
             log.error(e.getMessage());
         }
         return res;
