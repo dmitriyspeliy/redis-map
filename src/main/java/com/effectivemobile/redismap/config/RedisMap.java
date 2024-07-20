@@ -1,8 +1,11 @@
 package com.effectivemobile.redismap.config;
 
+import com.effective.mobile_pr2.service.CsvService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.exceptions.JedisException;
@@ -13,7 +16,7 @@ import java.util.Set;
 
 @Slf4j
 @RequiredArgsConstructor
-@Component
+@Service
 public class RedisMap implements Map<String, String> {
 
     private final JedisPool pool;

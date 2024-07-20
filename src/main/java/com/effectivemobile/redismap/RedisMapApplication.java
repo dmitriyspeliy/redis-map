@@ -1,13 +1,17 @@
 package com.effectivemobile.redismap;
 
+import com.effective.mobile_pr2.service.CsvService;
 import com.effectivemobile.redismap.config.RedisMap;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
 import redis.clients.jedis.JedisPool;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.effective.mobile_pr2")
 public class RedisMapApplication {
+
+    @Autowired
+    private CsvService csvService;
 
     public static void main(String[] args) {
         JedisPool jedisPool = new JedisPool("localhost", 6379);
